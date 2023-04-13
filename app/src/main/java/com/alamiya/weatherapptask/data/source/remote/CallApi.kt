@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface CallApi {
-
     @GET("forecast")
     suspend fun getWeatherDetails(
         @Query("appid") apiKey: String = Constants.API_KEY,
