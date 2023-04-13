@@ -1,3 +1,17 @@
 package com.alamiya.weatherapptask.data.source.local
 
-interface ILocalDataSource
+import androidx.room.Delete
+import androidx.room.Query
+import androidx.room.Upsert
+import com.alamiya.weatherapptask.data.source.dto.CashEntity
+import kotlinx.coroutines.flow.Flow
+
+interface ILocalDataSource{
+
+    fun getCash(): Flow<CashEntity>
+
+    suspend fun insertCash(cash: CashEntity)
+
+    suspend fun deleteCash(cash: CashEntity)
+
+}

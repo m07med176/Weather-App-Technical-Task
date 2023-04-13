@@ -1,7 +1,8 @@
-package com.alamiya.weatherapptask.data.source.remote
+package com.alamiya.weatherapptask.data.source.remote.retrofit
 
 import android.content.Context
 import com.alamiya.weatherapptask.Constants
+import com.alamiya.weatherapptask.data.source.remote.hasNetwork
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

@@ -8,6 +8,8 @@ import androidx.test.filters.SmallTest
 import com.alamiya.weatherapptask.data.source.dto.CashEntity
 import com.alamiya.weatherapptask.data.source.dto.City
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
+import com.alamiya.weatherapptask.data.source.local.room.CashDao
+import com.alamiya.weatherapptask.data.source.local.room.RoomDB
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest

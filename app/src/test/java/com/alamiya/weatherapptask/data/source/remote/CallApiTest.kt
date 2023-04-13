@@ -3,6 +3,8 @@ package com.alamiya.weatherapptask.data.source.remote
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.alamiya.weatherapptask.data.source.remote.retrofit.CallApi
+import com.alamiya.weatherapptask.data.source.remote.retrofit.RetrofitInstance
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking

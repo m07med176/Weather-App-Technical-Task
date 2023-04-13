@@ -1,4 +1,4 @@
-package com.alamiya.weatherapptask.data.source.local
+package com.alamiya.weatherapptask.data.source.local.room
 
 import androidx.room.TypeConverter
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse

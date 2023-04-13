@@ -1,4 +1,4 @@
-package com.alamiya.weatherapptask.data.source.local
+package com.alamiya.weatherapptask.data.source.local.room
 
 import android.content.Context
 import androidx.room.Database

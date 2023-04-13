@@ -1,4 +1,4 @@
-package com.alamiya.weatherapptask.data.source.local
+package com.alamiya.weatherapptask.data.source.local.room
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -14,8 +14,8 @@ interface CashDao {
     fun getCash(): Flow<CashEntity>
 
     @Upsert
-    suspend fun insertCash(home: CashEntity)
+    suspend fun insertCash(cash: CashEntity)
 
     @Delete
-    suspend fun deleteCash(home: CashEntity)
+    suspend fun deleteCash(cash: CashEntity)
 }

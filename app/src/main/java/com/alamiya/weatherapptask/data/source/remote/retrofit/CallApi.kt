@@ -1,4 +1,4 @@
-package com.alamiya.weatherapptask.data.source.remote
+package com.alamiya.weatherapptask.data.source.remote.retrofit
 
 import com.alamiya.weatherapptask.Constants
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
