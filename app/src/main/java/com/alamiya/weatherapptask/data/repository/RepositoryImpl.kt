@@ -3,8 +3,10 @@ package com.alamiya.weatherapptask.data.repository
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import androidx.annotation.RawRes
 import com.alamiya.weatherapptask.data.source.dto.CashEntity
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
+import com.alamiya.weatherapptask.data.source.dto.countries.CountriesItem
 import com.alamiya.weatherapptask.data.source.local.ILocalDataSource
 import com.alamiya.weatherapptask.data.source.local.LocalDataSource
 import com.alamiya.weatherapptask.data.source.local.room.RoomDB
@@ -12,8 +14,11 @@ import com.alamiya.weatherapptask.data.source.remote.IRemoteDataSource
 import com.alamiya.weatherapptask.data.source.remote.RemoteDataSource
 import com.alamiya.weatherapptask.data.source.remote.hasNetwork
 import com.alamiya.weatherapptask.data.source.remote.retrofit.RetrofitInstance
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class RepositoryImpl(
     override val local:ILocalDataSource,
@@ -56,4 +61,9 @@ class RepositoryImpl(
 
     override fun checkInternetConnectivity(): Boolean = context.hasNetwork()
 
+    override fun getCountries(@RawRes id:Int):List<CountriesItem>{
+        val inputStream = context.resources.openRawResource(id)
+        val jsonString = BufferedReader(InputStreamReader(inputStream)).use { it.readText() }
+        return Gson().fromJson(jsonString, Array<CountriesItem>::class.java).toList()
+    }
 }

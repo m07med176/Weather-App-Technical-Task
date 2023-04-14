@@ -16,6 +16,7 @@ import org.hamcrest.core.IsNull
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
+import com.alamiya.weatherapptask.R
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,9 +34,9 @@ class RepositoryImplTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    lateinit var repositoryImpl: RepositoryImpl
-    lateinit var cashEntity: CashEntity
-    lateinit var weatherSuccessResponse: WeatherSuccessResponse
+    private lateinit var repositoryImpl: RepositoryImpl
+    private lateinit var cashEntity: CashEntity
+    private lateinit var weatherSuccessResponse: WeatherSuccessResponse
 
     @Before
     fun prepareDependencies(){
@@ -89,5 +90,15 @@ class RepositoryImplTest {
         // Then: check if retrieved data not null
         if (result.isSuccessful)
             assertThat(result,IsNull.notNullValue())
+    }
+
+
+    @Test
+    fun `getCountries callApi checkIfNotNull`() {
+        // Given: Nothing
+        // When:
+        val result = repositoryImpl.getCountries(R.raw.countries)
+        // Then: check if retrieved data not null
+        assertThat(result,IsNull.notNullValue())
     }
 }
