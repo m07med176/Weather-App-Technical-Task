@@ -2,9 +2,9 @@ package com.alamiya.weatherapptask.presentation.weatherDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alamiya.weatherapptask.domain.usecase.GetWeatherDetailsUseCase
+import com.alamiya.weatherapptask.domain.usecase.UseCases
 
-class WeatherDetailsViewModelFactory constructor(private val useCases: GetWeatherDetailsUseCase) :
+class WeatherDetailsViewModelFactory constructor(private val useCases: UseCases) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(WeatherDetailsViewModel::class.java)) {

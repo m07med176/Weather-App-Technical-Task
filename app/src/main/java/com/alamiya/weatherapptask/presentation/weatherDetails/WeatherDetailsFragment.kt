@@ -5,14 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.alamiya.weatherapptask.R
 import com.alamiya.weatherapptask.data.repository.RepositoryImpl
 import com.alamiya.weatherapptask.databinding.FragmentWeatherDetailsBinding
+import com.alamiya.weatherapptask.domain.usecase.GetRegionsName
 import com.alamiya.weatherapptask.domain.usecase.GetWeatherDetailsUseCase
+import com.alamiya.weatherapptask.domain.usecase.UseCases
 import com.alamiya.weatherapptask.domain.utils.DataResponseState
 import kotlinx.coroutines.launch
 
@@ -22,7 +24,12 @@ class WeatherDetailsFragment : Fragment() {
 
     private val viewModel:WeatherDetailsViewModel by lazy {
         val repository = RepositoryImpl.getInstance(requireActivity().application)
-        val userCase = GetWeatherDetailsUseCase(repository)
+        val getWeatherDetailsUseCase = GetWeatherDetailsUseCase(repository)
+        val getRegionsName = GetRegionsName(repository)
+        val userCase = UseCases(
+            getWeatherDetailsUseCase,
+            getRegionsName
+        )
         ViewModelProvider(
             requireActivity(),
             WeatherDetailsViewModelFactory(userCase)
@@ -42,6 +49,7 @@ class WeatherDetailsFragment : Fragment() {
         val adapter = WeatherAdapter()
         binding.mAdapter = adapter
 
+        regionsAutoComplete()
         lifecycleScope.launch{
             viewModel.state.collect{state->
                 when(state){
@@ -74,6 +82,16 @@ class WeatherDetailsFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun regionsAutoComplete() {
+        viewModel.getRegions(R.raw.countries)
+
+        lifecycleScope.launch {
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, viewModel.regions.value)
+            binding.autoCompleteTextView.setAdapter(adapter)
+        }
+
     }
 
 }

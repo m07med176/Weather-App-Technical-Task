@@ -94,10 +94,10 @@ class RepositoryImplTest {
 
 
     @Test
-    fun `getCountries callApi checkIfNotNull`() {
+    fun `getCountries callApi checkIfNotNull`() = mainCoroutineRule.runBlockingTest {
         // Given: Nothing
         // When:
-        val result = repositoryImpl.getCountries(R.raw.countries)
+        val result = repositoryImpl.getCountries(R.raw.countries).first()
         // Then: check if retrieved data not null
         assertThat(result,IsNull.notNullValue())
     }

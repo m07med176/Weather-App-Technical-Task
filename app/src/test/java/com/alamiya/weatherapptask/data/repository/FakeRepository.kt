@@ -8,6 +8,7 @@ import com.alamiya.weatherapptask.data.source.local.ILocalDataSource
 import com.alamiya.weatherapptask.data.source.remote.IRemoteDataSource
 import com.alamiya.weatherapptask.domain.models.RegionsName
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 
 class FakeRepository(override val context: Context,
@@ -16,12 +17,14 @@ class FakeRepository(override val context: Context,
                      var isOnline: Boolean = true
 ) :IRepository {
     override fun checkInternetConnectivity(): Boolean  = isOnline
-    override fun getCountries(id: Int): List<CountriesItem>
-       = listOf(
-        CountriesItem("Capital1","Countries1", listOf()),
-        CountriesItem("Capital2","Countries2", listOf()),
-        CountriesItem("Capital3","Countries3", listOf()),
-    )
+    override fun getCountries(id: Int): Flow<List<CountriesItem>>
+       = flow {
+        emit(listOf(
+            CountriesItem("Capital1", "Countries1", listOf()),
+            CountriesItem("Capital2", "Countries2", listOf()),
+            CountriesItem("Capital3", "Countries3", listOf()),
+        ))
+    }
 
 
     override fun getCash(city: String): Flow<CashEntity>  = local.getCash(city)
