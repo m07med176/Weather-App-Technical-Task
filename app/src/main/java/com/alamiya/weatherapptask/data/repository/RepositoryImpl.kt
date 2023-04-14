@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class RepositoryImpl(
-    private val _local:ILocalDataSource,
-    private val _remote:IRemoteDataSource,
-    override val _context: Context
+    override val local:ILocalDataSource,
+    override val remote:IRemoteDataSource,
+    override val context: Context
     ) : IRepository {
 
 
@@ -43,17 +43,17 @@ class RepositoryImpl(
             }
         }
     }
-    override fun getCash(city:String): Flow<CashEntity>  = _local.getCash(city)
+    override fun getCash(city:String): Flow<CashEntity>  = local.getCash(city)
 
     override suspend fun insertCash(cash: CashEntity) {
-        _local.insertCash(cash)
+        local.insertCash(cash)
     }
 
 
     override suspend fun getWeatherDetails(cityName: String): Response<WeatherSuccessResponse> =
-        _remote.getWeatherDetails(cityName)
+        remote.getWeatherDetails(cityName)
 
 
-    override fun checkInternetConnectivity(): Boolean = _context.hasNetwork()
+    override fun checkInternetConnectivity(): Boolean = context.hasNetwork()
 
 }

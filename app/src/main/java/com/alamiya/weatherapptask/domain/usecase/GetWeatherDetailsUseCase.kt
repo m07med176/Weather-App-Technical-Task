@@ -11,13 +11,11 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 class GetWeatherDetailsUseCase(private val _repo:IRepository) {
-    operator fun invoke(city:String): Flow<DataResponseState<WeatherResponseModel>> = flow {
-        if( _repo.checkInternetConnectivity()){
-            onlineMode(city)
-        }else{
-            offlineMode(city)
-        }
-    }
+    operator fun invoke(city:String): Flow<DataResponseState<WeatherResponseModel>> =
+        if( _repo.checkInternetConnectivity()) onlineMode(city)
+        else  offlineMode(city)
+
+
 
 
     private fun onlineMode(city:String): Flow<DataResponseState<WeatherResponseModel>> = flow {
@@ -34,6 +32,8 @@ class GetWeatherDetailsUseCase(private val _repo:IRepository) {
                 // Send Data to state
                 emit(DataResponseState.OnSuccess(data))
             }
+        }else{
+            emit(DataResponseState.OnError("Error Happend"))
         }
     }
 

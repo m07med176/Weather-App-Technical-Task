@@ -10,10 +10,8 @@ import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
 import com.alamiya.weatherapptask.data.source.local.FakeLocalDataSource
 import com.alamiya.weatherapptask.data.source.remote.FakeRemoteDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.core.IsNull
 import org.junit.Assert.*
 import org.junit.Before
@@ -54,9 +52,9 @@ class RepositoryImplTest {
 
         // Initialize Repository
         repositoryImpl = RepositoryImpl(
-            _local = FakeLocalDataSource(cashEntity),
-            _remote = FakeRemoteDataSource(weatherSuccessResponse),
-            _context = ApplicationProvider.getApplicationContext()
+            local = FakeLocalDataSource(cashEntity),
+            remote = FakeRemoteDataSource(weatherSuccessResponse),
+            context = ApplicationProvider.getApplicationContext()
         )
     }
 

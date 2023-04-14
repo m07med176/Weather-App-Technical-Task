@@ -99,7 +99,6 @@ class CashDaoTest {
 
         fakeData.createdAt = differentTime
         cashDao.insertCash(fakeData)
-        val item  = cashDao.getCash(fakeData.cityName).first()
 
         // When: delete inserted item
         cashDao.deleteCash(currentTimeMilli)
