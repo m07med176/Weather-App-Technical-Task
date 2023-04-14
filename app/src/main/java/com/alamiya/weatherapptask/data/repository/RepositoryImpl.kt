@@ -1,16 +1,23 @@
 package com.alamiya.weatherapptask.data.repository
 
 import android.app.Application
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import com.alamiya.weatherapptask.Constants
 import com.alamiya.weatherapptask.data.source.dto.CashEntity
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
 import com.alamiya.weatherapptask.data.source.local.ILocalDataSource
 import com.alamiya.weatherapptask.data.source.local.LocalDataSource
+import com.alamiya.weatherapptask.data.source.local.RemoveCashWorker
 import com.alamiya.weatherapptask.data.source.local.room.RoomDB
 import com.alamiya.weatherapptask.data.source.remote.IRemoteDataSource
 import com.alamiya.weatherapptask.data.source.remote.RemoteDataSource
 import com.alamiya.weatherapptask.data.source.remote.retrofit.RetrofitInstance
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 class RepositoryImpl(
     private val local:ILocalDataSource,
@@ -49,4 +56,7 @@ class RepositoryImpl(
 
     override suspend fun getWeatherDetails(cityName: String): Response<WeatherSuccessResponse> =
         remote.getWeatherDetails(cityName)
+
+
+
 }
