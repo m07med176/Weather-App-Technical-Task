@@ -22,23 +22,29 @@ class GetWeatherDetailsUseCase(private val _repo:IRepository) {
     private fun onlineMode(city:String): Flow<DataResponseState<WeatherResponseModel>> = flow {
         val response = _repo.getWeatherDetails(city)
 
-        if (response.isSuccessful){
-            val responseData = response.body()
-            responseData?.let {
-                val data = WeatherResponseMapper().mapFromEntity(it)
+        when(response.code()){
+            200-> {
+                val responseData = response.body()
+                responseData?.let {
+                    val data = WeatherResponseMapper().mapFromEntity(it)
 
-                // Insert Data in Cash Room
-                _repo.insertCash(CashEntity(
-                    cityName = city,
-                    content = it
-                ))
+                    // Insert Data in Cash Room
+                    _repo.insertCash(CashEntity(
+                        cityName = city,
+                        content = it
+                    ))
 
-                // Send Data to state
-                emit(DataResponseState.OnSuccess(data))
+                    // Send Data to state
+                    emit(DataResponseState.OnSuccess(data))
+                }
             }
-        }else{
-            emit(DataResponseState.OnError("Error Happend"))
+
+            404-> emit(DataResponseState.OnNothingData())
+
+            else-> emit(DataResponseState.OnError("Error Happend"))
+
         }
+
     }
 
     private fun offlineMode(city:String): Flow<DataResponseState<WeatherResponseModel>> = flow {

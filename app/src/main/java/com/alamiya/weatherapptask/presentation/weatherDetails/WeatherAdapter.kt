@@ -11,7 +11,9 @@ import com.alamiya.weatherapptask.databinding.ItemDailyBinding
 import com.alamiya.weatherapptask.domain.models.WeatherContentModel
 
 
-class WeatherAdapter : ListAdapter<WeatherContentModel, WeatherAdapter.MyViewHolder>(DailyDiffCallback()) {
+class WeatherAdapter(
+    private val clickListener: ItemOnCLickListener
+) : ListAdapter<WeatherContentModel, WeatherAdapter.MyViewHolder>(DailyDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder = MyViewHolder(
@@ -19,14 +21,15 @@ class WeatherAdapter : ListAdapter<WeatherContentModel, WeatherAdapter.MyViewHol
     )
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binder(getItem(position))
+        holder.binder(getItem(position),clickListener)
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val binder = ItemDailyBinding.bind(itemView)
-        fun binder(data: WeatherContentModel) {
+        fun binder(data: WeatherContentModel, itemOnCLickListener: ItemOnCLickListener) {
             binder.modelData = data
+            binder.clickListener = itemOnCLickListener
             binder.executePendingBindings()
         }
     }
@@ -44,6 +47,12 @@ class WeatherAdapter : ListAdapter<WeatherContentModel, WeatherAdapter.MyViewHol
                     oldItem.image == newItem.image
 
 
+    }
+
+    class ItemOnCLickListener(
+        val clickListener: (model: WeatherContentModel) -> Unit,
+    ) {
+        fun onClick(model: WeatherContentModel) = clickListener(model)
     }
 }
 

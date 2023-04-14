@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="viewModel"
+            type="com.alamiya.weatherapptask.presentation.weatherDetails.WeatherDetailsViewModel" />
+        <variable
             name="mAdapter"
             type="com.alamiya.weatherapptask.presentation.weatherDetails.WeatherAdapter" />
     </data>
@@ -16,17 +19,30 @@
         tools:context=".presentation.weatherDetails.WeatherDetailsFragment">
 
 
-        <AutoCompleteTextView
-            android:layout_margin="10dp"
-            android:id="@+id/auto_complete_text_view"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:completionThreshold="1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_margin="10dp"
             android:hint="@string/region_name"
-            android:inputType="textAutoComplete|textAutoCorrect"
+            app:hintEnabled="true"
+            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <AutoCompleteTextView
+                android:padding="10dp"
+                android:maxLines="1"
+                android:id="@+id/auto_complete_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+           />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -37,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auto_complete_text_view">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_holder">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/state_empty_data_holder"

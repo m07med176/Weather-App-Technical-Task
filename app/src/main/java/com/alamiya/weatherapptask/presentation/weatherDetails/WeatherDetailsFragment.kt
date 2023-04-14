@@ -1,6 +1,8 @@
 package com.alamiya.weatherapptask.presentation.weatherDetails
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alamiya.weatherapptask.R
 import com.alamiya.weatherapptask.data.repository.RepositoryImpl
 import com.alamiya.weatherapptask.databinding.FragmentWeatherDetailsBinding
+import com.alamiya.weatherapptask.domain.models.WeatherContentModel
 import com.alamiya.weatherapptask.domain.usecase.GetRegionsName
 import com.alamiya.weatherapptask.domain.usecase.GetWeatherDetailsUseCase
 import com.alamiya.weatherapptask.domain.usecase.UseCases
@@ -40,13 +43,11 @@ class WeatherDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_weather_details,container,false)
         binding.lifecycleOwner = this
 
-        viewModel.getWeatherData("London")
-
-        val adapter = WeatherAdapter()
+        binding.autoCompleteTextView.addTextChangedListener(viewModel.textWatcher)
+        val adapter = WeatherAdapter(WeatherAdapter.ItemOnCLickListener(::ItemClicked))
         binding.mAdapter = adapter
 
         regionsAutoComplete()
@@ -84,14 +85,16 @@ class WeatherDetailsFragment : Fragment() {
         return binding.root
     }
 
+    private fun ItemClicked(model: WeatherContentModel) {
+
+    }
+
     private fun regionsAutoComplete() {
         viewModel.getRegions(R.raw.countries)
-
         lifecycleScope.launch {
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, viewModel.regions.value)
             binding.autoCompleteTextView.setAdapter(adapter)
         }
-
     }
 
 }

@@ -1,5 +1,9 @@
 package com.alamiya.weatherapptask.presentation.weatherDetails
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.AdapterView
 import androidx.annotation.RawRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,6 +27,7 @@ class WeatherDetailsViewModel(private val userCases: UseCases) : ViewModel() {
         MutableStateFlow<List<String>>(emptyList())
     val regions: StateFlow<List<String>>
         get() = _regions
+
     fun getRegions(@RawRes id:Int){
         viewModelScope.launch {
             userCases.getRegionsName.invoke(id).collect{
@@ -31,9 +36,9 @@ class WeatherDetailsViewModel(private val userCases: UseCases) : ViewModel() {
 
         }
     }
-    fun getWeatherData(city: String){
+    fun getWeatherData(city: CharSequence){
         viewModelScope.launch {
-            userCases.getWeatherDetailsUseCase.invoke(city)
+            userCases.getWeatherDetailsUseCase.invoke(city.toString())
                 .catch {
                     _state.value = DataResponseState.OnError(it.message.toString())
                 }.collect{
@@ -42,4 +47,19 @@ class WeatherDetailsViewModel(private val userCases: UseCases) : ViewModel() {
         }
     }
 
+
+    val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(query: CharSequence?, start: Int, before: Int, count: Int) {
+            if (query.toString().isBlank())
+                _state.value = DataResponseState.OnNothingData()
+            else
+                getWeatherData(query.toString())
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+        }
+    }
 }

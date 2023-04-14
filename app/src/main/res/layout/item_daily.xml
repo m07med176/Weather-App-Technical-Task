@@ -5,6 +5,10 @@
 
     <data>
         <variable
+            name="clickListener"
+            type="com.alamiya.weatherapptask.presentation.weatherDetails.WeatherAdapter.ItemOnCLickListener" />
+
+        <variable
             name="modelData"
             type="com.alamiya.weatherapptask.domain.models.WeatherContentModel" />
     </data>
@@ -17,6 +21,7 @@
         app:cardCornerRadius="30dp">
 
         <LinearLayout
+            android:onClick="@{()->clickListener.onClick(modelData)}"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
