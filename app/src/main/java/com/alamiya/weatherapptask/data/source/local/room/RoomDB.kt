@@ -9,7 +9,7 @@ import com.alamiya.weatherapptask.data.source.dto.CashEntity
 
 @Database(
     entities = [CashEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(WeatherCashConverters::class)

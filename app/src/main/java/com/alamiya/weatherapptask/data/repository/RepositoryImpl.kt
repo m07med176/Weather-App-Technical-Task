@@ -37,14 +37,14 @@ class RepositoryImpl(
             }
         }
     }
-    override fun getCash(): Flow<CashEntity>  = local.getCash()
+    override fun getCash(city:String): Flow<CashEntity>  = local.getCash(city)
 
     override suspend fun insertCash(cash: CashEntity) {
         local.insertCash(cash)
     }
 
-    override suspend fun deleteCash(cash: CashEntity) {
-        local.deleteCash(cash)
+    override suspend fun deleteCash(createdAt: Long) {
+        local.deleteCash(createdAt)
     }
 
     override suspend fun getWeatherDetails(cityName: String): Response<WeatherSuccessResponse> =

@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.Flow
 class LocalDataSource(
     private val db: CashDao
 ) : ILocalDataSource {
-    override fun getCash(): Flow<CashEntity>  = db.getCash()
+    override fun getCash(city:String): Flow<CashEntity>  = db.getCash(city)
 
     override suspend fun insertCash(cash: CashEntity) {
         db.insertCash(cash)
     }
 
-    override suspend fun deleteCash(cash: CashEntity) {
-        db.deleteCash(cash)
+    override suspend fun deleteCash(createdAt: Long) {
+        db.deleteCash(createdAt)
     }
 }

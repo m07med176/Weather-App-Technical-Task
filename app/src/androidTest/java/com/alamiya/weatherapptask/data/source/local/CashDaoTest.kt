@@ -22,6 +22,8 @@ import org.junit.Rule
 
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.text.SimpleDateFormat
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -37,13 +39,15 @@ class CashDaoTest {
     @Before
     fun initDB(){
         fakeData = CashEntity(
+
             content = WeatherSuccessResponse(
                 city = City(),
                 cnt = 563,
                 cod = "200" ,
                 list = listOf(),
                 message = 65
-            )
+            ),
+            cityName = "London"
         )
 
         database = Room.inMemoryDatabaseBuilder(
@@ -62,7 +66,7 @@ class CashDaoTest {
         cashDao.insertCash(fakeData)
 
         // When: retrieve single items from room
-        val item  = cashDao.getCash().first()
+        val item  = cashDao.getCash(fakeData.cityName).first()
 
         // Then: count of inserted items and retrieved are same
         assertThat(item.content.cod,`is`("200"))
@@ -75,21 +79,33 @@ class CashDaoTest {
         cashDao.insertCash(fakeData)
 
         // Then: get last inserted data from room
-        val item  = cashDao.getCash().first()
+        val item  = cashDao.getCash(fakeData.cityName).first()
         assertThat(item.content.cod,`is`("200"))
     }
 
     @Test
     fun deleteHome_deleteItem_getNullValue()  = runBlockingTest {
-        // Given: insert fake data to room and retrieve it
+        // Given:
+        //      - get current time in milli and get different time
+        //      - insert fake data with different time to room and retrieve it
+
+        val currentTimeMilli = System.currentTimeMillis()
+        val MAX_AGE = 7
+        val maxAgeInMilli = MAX_AGE * 24 * 60 * 60 * 1000
+        val differentTime = currentTimeMilli - maxAgeInMilli
+
+        val dateFormate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        println("Date is ==> ${dateFormate.format(Date(differentTime))}")
+
+        fakeData.createdAt = differentTime
         cashDao.insertCash(fakeData)
-        val item  = cashDao.getCash().first()
+        val item  = cashDao.getCash(fakeData.cityName).first()
 
         // When: delete inserted item
-        cashDao.deleteCash(item)
+        cashDao.deleteCash(currentTimeMilli)
 
         // Then: get data from room to check if null
-        val result  = cashDao.getCash().first()
+        val result  = cashDao.getCash(fakeData.cityName).first()
         assertThat(result, IsNull.nullValue())
 
     }

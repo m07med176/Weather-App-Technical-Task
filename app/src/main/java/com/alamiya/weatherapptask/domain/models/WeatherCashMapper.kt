@@ -15,13 +15,15 @@ class WeatherCashMapper: EntityMapper<CashEntity,WeatherResponseModel> {
     )
 
     override fun entityFromMap(domainModel: WeatherResponseModel): CashEntity
-    = CashEntity(content =  WeatherSuccessResponse(
+    = CashEntity(
+        content =  WeatherSuccessResponse(
         city = domainModel.cityModel,
         cnt = domainModel.cnt,
         cod = domainModel.cod,
         list = domainModel.list,
         message = domainModel.message
-    ))
+    ),
+    cityName = domainModel.cityModel.name?:"UnKnown" )
 
 
 

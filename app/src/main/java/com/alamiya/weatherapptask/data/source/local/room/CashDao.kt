@@ -10,12 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CashDao {
 
-    @Query("SELECT * FROM cash_table ORDER BY id DESC LIMIT 1")
-    fun getCash(): Flow<CashEntity>
+    @Query("SELECT * FROM cash_table WHERE cityName =:cityName")
+    fun getCash(cityName:String): Flow<CashEntity>
 
     @Upsert
     suspend fun insertCash(cash: CashEntity)
 
-    @Delete
-    suspend fun deleteCash(cash: CashEntity)
+    @Query("DELETE FROM cash_table WHERE createdAt < :createdAt")
+    suspend fun deleteCash(createdAt: Long)
+
+
 }

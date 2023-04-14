@@ -6,7 +6,7 @@ import com.alamiya.weatherapptask.domain.models.WeatherResponseModel
 
 class DeleteCashUseCase(private val _repo:IRepository) {
 
-    suspend operator fun invoke(model:WeatherResponseModel){
-        _repo.deleteCash(WeatherCashMapper().entityFromMap(model))
+    suspend operator fun invoke(createAt:Long){
+        _repo.deleteCash(createAt)
     }
 }

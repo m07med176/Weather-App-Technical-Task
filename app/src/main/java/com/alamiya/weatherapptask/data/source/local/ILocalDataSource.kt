@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface ILocalDataSource{
 
-    fun getCash(): Flow<CashEntity>
+    fun getCash(city:String): Flow<CashEntity>
 
     suspend fun insertCash(cash: CashEntity)
 
-    suspend fun deleteCash(cash: CashEntity)
+    suspend fun deleteCash(createdAt: Long)
 
 }

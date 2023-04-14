@@ -8,6 +8,5 @@ import java.util.concurrent.Flow
 
 class GetWeatherDetailsUseCase(private val _repo:IRepository) {
 //    suspend operator fun invoke(city:String):Flow<DataResponseState<WeatherResponseModel>>
-//
 //    = _repo.getWeatherDetails(city)
 }
