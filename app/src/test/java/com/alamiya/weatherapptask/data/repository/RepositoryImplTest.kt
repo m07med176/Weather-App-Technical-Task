@@ -2,6 +2,7 @@ package com.alamiya.weatherapptask.data.repository
 
 import MainCoroutineRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.alamiya.weatherapptask.data.source.dto.CashEntity
 import com.alamiya.weatherapptask.data.source.dto.City
@@ -49,12 +50,13 @@ class RepositoryImplTest {
             message = 65
         )
 
-        cashEntity = CashEntity(content = weatherSuccessResponse)
+        cashEntity = CashEntity(content = weatherSuccessResponse, cityName = "London")
 
         // Initialize Repository
         repositoryImpl = RepositoryImpl(
-            local = FakeLocalDataSource(cashEntity),
-            remote = FakeRemoteDataSource(weatherSuccessResponse)
+            _local = FakeLocalDataSource(cashEntity),
+            _remote = FakeRemoteDataSource(weatherSuccessResponse),
+            _context = ApplicationProvider.getApplicationContext()
         )
     }
 
@@ -65,7 +67,7 @@ class RepositoryImplTest {
         repositoryImpl.insertCash(cashEntity)
 
         // When: get cash entity from database
-        val result = repositoryImpl.getCash().first()
+        val result = repositoryImpl.getCash(cashEntity.cityName).first()
 
         // Then:  check if not null
         assertThat(result, IsNull.notNullValue())
@@ -78,23 +80,8 @@ class RepositoryImplTest {
         // When: insert cash entity to database
         repositoryImpl.insertCash(cashEntity)
         // Then: get cash entity from database and check if not null
-        val result = repositoryImpl.getCash().first()
+        val result = repositoryImpl.getCash(cashEntity.cityName).first()
         assertThat(result, IsNull.notNullValue())
-    }
-
-    @Test
-    fun `deleteCash DeleteItem CheckNoData`()  = mainCoroutineRule.runBlockingTest {
-        // Given: insert cash entity to database and retrieve it from database
-        repositoryImpl.insertCash(cashEntity)
-        val item = repositoryImpl.getCash().first()
-
-        // When: delete cash entity to database
-        repositoryImpl.deleteCash(item)
-
-        // Then: get count from database and check if zero
-        val result = repositoryImpl.getCash().count()
-        assertThat(result, `is`(0))
-
     }
 
     @Test

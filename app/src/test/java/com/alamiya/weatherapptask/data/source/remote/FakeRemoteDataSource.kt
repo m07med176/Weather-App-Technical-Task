@@ -11,4 +11,6 @@ class FakeRemoteDataSource(
     override suspend fun getWeatherDetails(
         cityName: String
     ): Response<WeatherSuccessResponse>  = Response.success(weatherSuccessResponse)
+
+    override fun checkInternetConnectivity(): Boolean  = true
 }

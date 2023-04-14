@@ -13,7 +13,4 @@ class LocalDataSource(
         db.insertCash(cash)
     }
 
-    override suspend fun deleteCash(createdAt: Long) {
-        db.deleteCash(createdAt)
-    }
 }

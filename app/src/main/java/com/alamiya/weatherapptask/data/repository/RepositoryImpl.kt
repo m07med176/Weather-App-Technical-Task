@@ -1,31 +1,30 @@
 package com.alamiya.weatherapptask.data.repository
 
+import android.annotation.SuppressLint
 import android.app.Application
-import androidx.work.Constraints
-import androidx.work.Data
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import com.alamiya.weatherapptask.Constants
+import android.content.Context
 import com.alamiya.weatherapptask.data.source.dto.CashEntity
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
 import com.alamiya.weatherapptask.data.source.local.ILocalDataSource
 import com.alamiya.weatherapptask.data.source.local.LocalDataSource
-import com.alamiya.weatherapptask.data.source.local.RemoveCashWorker
 import com.alamiya.weatherapptask.data.source.local.room.RoomDB
 import com.alamiya.weatherapptask.data.source.remote.IRemoteDataSource
 import com.alamiya.weatherapptask.data.source.remote.RemoteDataSource
+import com.alamiya.weatherapptask.data.source.remote.hasNetwork
 import com.alamiya.weatherapptask.data.source.remote.retrofit.RetrofitInstance
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
-import java.util.concurrent.TimeUnit
 
 class RepositoryImpl(
-    private val local:ILocalDataSource,
-    private val remote:IRemoteDataSource
+    private val _local:ILocalDataSource,
+    private val _remote:IRemoteDataSource,
+    override val _context: Context
+    ) : IRepository {
 
-) : IRepository {
 
     companion object{
+
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: RepositoryImpl? = null
 
@@ -39,24 +38,22 @@ class RepositoryImpl(
                 val api = RetrofitInstance(app).api
                 val remoteDataSource = RemoteDataSource(api)
 
-                RepositoryImpl(localDataSource,remoteDataSource)
+                RepositoryImpl(localDataSource,remoteDataSource,app)
 
             }
         }
     }
-    override fun getCash(city:String): Flow<CashEntity>  = local.getCash(city)
+    override fun getCash(city:String): Flow<CashEntity>  = _local.getCash(city)
 
     override suspend fun insertCash(cash: CashEntity) {
-        local.insertCash(cash)
+        _local.insertCash(cash)
     }
 
-    override suspend fun deleteCash(createdAt: Long) {
-        local.deleteCash(createdAt)
-    }
 
     override suspend fun getWeatherDetails(cityName: String): Response<WeatherSuccessResponse> =
-        remote.getWeatherDetails(cityName)
+        _remote.getWeatherDetails(cityName)
 
 
+    override fun checkInternetConnectivity(): Boolean = _context.hasNetwork()
 
 }

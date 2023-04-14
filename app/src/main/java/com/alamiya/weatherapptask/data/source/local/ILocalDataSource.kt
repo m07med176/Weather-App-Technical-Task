@@ -12,6 +12,4 @@ interface ILocalDataSource{
 
     suspend fun insertCash(cash: CashEntity)
 
-    suspend fun deleteCash(createdAt: Long)
-
 }

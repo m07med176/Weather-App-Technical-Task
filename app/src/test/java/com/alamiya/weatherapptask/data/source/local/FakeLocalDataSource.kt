@@ -16,7 +16,4 @@ class FakeLocalDataSource(
         this.cash = cash
     }
 
-    override suspend fun deleteCash(createdAt: Long) {
-        this.cash = null
-    }
 }

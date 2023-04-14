@@ -10,4 +10,5 @@ class RemoteDataSource(
     override suspend fun getWeatherDetails(
         cityName: String
     ): Response<WeatherSuccessResponse>  = api.getWeatherDetails(cityName = cityName)
+
 }

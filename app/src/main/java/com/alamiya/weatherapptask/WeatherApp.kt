@@ -22,7 +22,7 @@ class WeatherApp:Application() {
     }
     private fun initializeWorker(){
         val data  = Data.Builder()
-        data.putLong("id",Constants.WORKER_ID)
+        data.putLong("id", Constants.WORKER_ID)
 
         val constraints = Constraints.Builder()
             .setRequiresBatteryNotLow(true)
