@@ -1,6 +1,7 @@
 package com.alamiya.weatherapptask.domain.usecase
 
 import com.alamiya.weatherapptask.data.repository.IRepository
+import com.alamiya.weatherapptask.data.source.dto.CashEntity
 import com.alamiya.weatherapptask.domain.models.WeatherCashMapper
 import com.alamiya.weatherapptask.domain.models.WeatherResponseMapper
 import com.alamiya.weatherapptask.domain.models.WeatherResponseModel
@@ -27,7 +28,10 @@ class GetWeatherDetailsUseCase(private val _repo:IRepository) {
                 val data = WeatherResponseMapper().mapFromEntity(it)
 
                 // Insert Data in Cash Room
-                _repo.insertCash(WeatherCashMapper().entityFromMap(data))
+                _repo.insertCash(CashEntity(
+                    cityName = city,
+                    content = it
+                ))
 
                 // Send Data to state
                 emit(DataResponseState.OnSuccess(data))

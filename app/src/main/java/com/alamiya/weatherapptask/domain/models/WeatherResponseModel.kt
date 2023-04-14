@@ -5,8 +5,5 @@ import com.alamiya.weatherapptask.data.source.dto.WeatherContent
 
 data class WeatherResponseModel(
     val cityModel: City,
-    val cnt: Int,
-    val cod: String,
-    val list: List<WeatherContent>,
-    val message: Int
+    val weatherList: List<WeatherContentModel>,
 )

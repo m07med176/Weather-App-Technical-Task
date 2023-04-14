@@ -8,28 +8,21 @@ import org.junit.Assert
 import org.junit.Assert.*
 
 import org.junit.Test
+import org.robolectric.annotation.Config
 
 class WeatherCashMapperTest {
 
     val weatherSuccessResponse  = WeatherSuccessResponse(
         city = City(),
-        cnt = 563,
         cod = "200" ,
         list = listOf(),
-        message = 65
     )
 
     val cashEntity = CashEntity(
         cityName = "London",
         content = weatherSuccessResponse
     )
-    val weatherResponseModel = WeatherResponseModel(
-        cityModel = City(),
-        cnt = 563,
-        cod = "200" ,
-        list = listOf(),
-        message = 65
-    )
+
 
     val weatherCashMapper = WeatherCashMapper()
 
@@ -43,13 +36,5 @@ class WeatherCashMapperTest {
         assertThat(result, Matchers.instanceOf(WeatherResponseModel::class.java))
     }
 
-    @Test
-    fun entityFromMap() {
-        // Given
-        val item = weatherResponseModel
-        // When
-        val result = weatherCashMapper.entityFromMap(item)
-        // Then
-        assertThat(result, Matchers.instanceOf(CashEntity::class.java))
-    }
+
 }

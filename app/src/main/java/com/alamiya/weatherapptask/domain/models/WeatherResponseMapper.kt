@@ -1,24 +1,31 @@
 package com.alamiya.weatherapptask.domain.models
 
+import com.alamiya.weatherapptask.data.source.dto.Weather
 import com.alamiya.weatherapptask.data.source.dto.WeatherSuccessResponse
 import com.alamiya.weatherapptask.domain.utils.EntityMapper
+import com.alamiya.weatherapptask.domain.utils.TimeConverter
+import com.alamiya.weatherapptask.domain.utils.iconConverter
 
 class WeatherResponseMapper:EntityMapper<WeatherSuccessResponse,WeatherResponseModel> {
     override fun mapFromEntity(entity: WeatherSuccessResponse): WeatherResponseModel
-    = WeatherResponseModel(
+     = WeatherResponseModel(
         cityModel = entity.city,
-        cnt = entity.cnt,
-        cod = entity.cod,
-        list = entity.list,
-        message = entity.message
+        weatherList = entity.list.map {
+            val weatherDesc = if (it.weather.isEmpty()) Weather() else it.weather[0]
+            WeatherContentModel(
+                dt = TimeConverter.convertTimestampToString(it.dt.toLong(), TimeConverter.DAY_PATTERN) ?: "",
+                image = iconConverter(weatherDesc.icon),
+                max = it.main.temp_max.toString(),
+                min = it.main.temp_min.toString(),
+                desc = weatherDesc.description,
+
+                feels_like = it.main.feels_like.toString(),
+                humidity = it.main.humidity.toString(),
+                pressure = it.main.pressure.toString(),
+                temp = it.main.temp.toString(),
+                visibility = it.visibility.toString(),
+            )
+        }
     )
 
-    override fun entityFromMap(domainModel: WeatherResponseModel): WeatherSuccessResponse
-    = WeatherSuccessResponse(
-        city = domainModel.cityModel,
-        cnt = domainModel.cnt,
-        cod = domainModel.cod,
-        list = domainModel.list,
-        message = domainModel.message
-    )
 }

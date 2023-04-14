@@ -23,7 +23,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
-@Config(sdk = [32])
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class GetWeatherDetailsUseCaseTest {
@@ -42,10 +41,8 @@ class GetWeatherDetailsUseCaseTest {
     fun handler() {
         val weatherSuccessResponse = WeatherSuccessResponse(
             city = City(),
-            cnt = 563,
             cod = "200",
             list = listOf(),
-            message = 65
         )
         val cashEntity = CashEntity(
             content = weatherSuccessResponse,

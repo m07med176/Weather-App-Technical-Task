@@ -42,10 +42,8 @@ class RepositoryImplTest {
         // Fake data source
         weatherSuccessResponse  = WeatherSuccessResponse(
             city = City(),
-            cnt = 563,
             cod = "200" ,
             list = listOf(),
-            message = 65
         )
 
         cashEntity = CashEntity(content = weatherSuccessResponse, cityName = "London")
