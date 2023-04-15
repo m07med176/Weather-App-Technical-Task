@@ -13,5 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "WeatherAppTask"
-include ':app'
+include ':shared'
 include ':jetbackcomposeview'
+include ':databindingview'
