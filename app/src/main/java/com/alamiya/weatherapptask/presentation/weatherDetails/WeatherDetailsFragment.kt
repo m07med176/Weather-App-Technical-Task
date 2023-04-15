@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 class WeatherDetailsFragment : Fragment() {
     private lateinit var binding: FragmentWeatherDetailsBinding
 
+
     private val viewModel:WeatherDetailsViewModel by lazy {
         val repository = RepositoryImpl.getInstance(requireActivity().application)
         val getWeatherDetailsUseCase = GetWeatherDetailsUseCase(repository)
@@ -50,36 +51,52 @@ class WeatherDetailsFragment : Fragment() {
         val adapter = WeatherAdapter(WeatherAdapter.ItemOnCLickListener(::ItemClicked))
         binding.mAdapter = adapter
 
+
         regionsAutoComplete()
         lifecycleScope.launch{
             viewModel.state.collect{state->
-                when(state){
-                    is DataResponseState.OnSuccess -> {
-                        binding.stateEmptyDataHolder.visibility = View.GONE
-                        binding.stateLoadingHolder.visibility = View.GONE
-                        binding.stateErrorHolder.visibility = View.GONE
-                        binding.rvFavorite.visibility = View.VISIBLE
-                        adapter.submitList(state.data.weatherList)
-                    }
-                    is DataResponseState.OnError -> {
-                        binding.stateEmptyDataHolder.visibility = View.GONE
-                        binding.stateLoadingHolder.visibility = View.GONE
-                        binding.stateErrorHolder.visibility = View.VISIBLE
-                        binding.rvFavorite.visibility = View.GONE
-                    }
-                    is DataResponseState.OnLoading -> {
-                        binding.stateEmptyDataHolder.visibility = View.GONE
-                        binding.stateLoadingHolder.visibility = View.VISIBLE
-                        binding.stateErrorHolder.visibility = View.GONE
-                        binding.rvFavorite.visibility = View.GONE
-                    }
-                    is DataResponseState.OnNothingData -> {
-                        binding.stateEmptyDataHolder.visibility = View.VISIBLE
-                        binding.stateLoadingHolder.visibility = View.GONE
-                        binding.stateErrorHolder.visibility = View.GONE
-                        binding.rvFavorite.visibility = View.GONE
+                if (viewModel.firstOpen){
+                    binding.stateFirstOpen.visibility = View.VISIBLE
+                    binding.stateEmptyDataHolder.visibility = View.GONE
+                    binding.stateLoadingHolder.visibility = View.GONE
+                    binding.stateErrorHolder.visibility = View.GONE
+                    binding.rvFavorite.visibility = View.GONE
+                }
+                else
+                {
+                    when(state){
+                        is DataResponseState.OnSuccess -> {
+                            binding.stateFirstOpen.visibility = View.GONE
+                            binding.stateEmptyDataHolder.visibility = View.GONE
+                            binding.stateLoadingHolder.visibility = View.GONE
+                            binding.stateErrorHolder.visibility = View.GONE
+                            binding.rvFavorite.visibility = View.VISIBLE
+                            adapter.submitList(state.data.weatherList)
+                        }
+                        is DataResponseState.OnError -> {
+                            binding.stateFirstOpen.visibility = View.GONE
+                            binding.stateEmptyDataHolder.visibility = View.GONE
+                            binding.stateLoadingHolder.visibility = View.GONE
+                            binding.stateErrorHolder.visibility = View.VISIBLE
+                            binding.rvFavorite.visibility = View.GONE
+                        }
+                        is DataResponseState.OnLoading -> {
+                            binding.stateFirstOpen.visibility = View.GONE
+                            binding.stateEmptyDataHolder.visibility = View.GONE
+                            binding.stateLoadingHolder.visibility = View.VISIBLE
+                            binding.stateErrorHolder.visibility = View.GONE
+                            binding.rvFavorite.visibility = View.GONE
+                        }
+                        is DataResponseState.OnNothingData -> {
+                            binding.stateFirstOpen.visibility = View.GONE
+                            binding.stateEmptyDataHolder.visibility = View.VISIBLE
+                            binding.stateLoadingHolder.visibility = View.GONE
+                            binding.stateErrorHolder.visibility = View.GONE
+                            binding.rvFavorite.visibility = View.GONE
+                        }
                     }
                 }
+
             }
         }
         return binding.root

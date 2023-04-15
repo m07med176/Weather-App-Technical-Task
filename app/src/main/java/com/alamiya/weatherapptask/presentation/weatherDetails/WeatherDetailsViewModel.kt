@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class WeatherDetailsViewModel(private val userCases: UseCases) : ViewModel() {
+    var firstOpen:Boolean = true
+
     private val _state =
         MutableStateFlow<DataResponseState<WeatherResponseModel>>(DataResponseState.OnLoading())
     val state: StateFlow<DataResponseState<WeatherResponseModel>>
@@ -53,6 +55,9 @@ class WeatherDetailsViewModel(private val userCases: UseCases) : ViewModel() {
         }
 
         override fun onTextChanged(query: CharSequence?, start: Int, before: Int, count: Int) {
+            if (firstOpen){
+                firstOpen = false
+            }
             if (query.toString().isBlank())
                 _state.value = DataResponseState.OnNothingData()
             else

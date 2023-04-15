@@ -56,6 +56,15 @@
             app:layout_constraintTop_toBottomOf="@+id/text_input_holder">
 
             <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/state_first_open"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/landing_page" />
+
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/state_empty_data_holder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
