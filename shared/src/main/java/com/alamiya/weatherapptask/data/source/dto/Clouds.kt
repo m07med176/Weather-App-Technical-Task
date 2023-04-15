@@ -1,5 +1,5 @@
 package com.alamiya.weatherapptask.data.source.dto
 
 data class Clouds(
-    val all: Int
+    val all: Int = 0
 )

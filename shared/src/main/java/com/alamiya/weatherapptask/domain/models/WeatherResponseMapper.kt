@@ -24,6 +24,9 @@ class WeatherResponseMapper:EntityMapper<WeatherSuccessResponse,WeatherResponseM
                 pressure = it.main.pressure.toString(),
                 temp = it.main.temp.toString(),
                 visibility = it.visibility.toString(),
+                wind = it.wind.speed.toString(),
+                cloud = it.clouds.all.toString(),
+                windGust = it.wind.gust.toString()
             )
         }
     )

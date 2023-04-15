@@ -12,4 +12,7 @@ data class WeatherContentModel(
     val pressure: String = "",
     var temp: String = "",
     val visibility: String = "",
-    )
+    val wind: String = "",
+    val cloud: String = "",
+    val windGust: String = ""
+)

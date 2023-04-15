@@ -24,7 +24,7 @@
             android:id="@+id/measurementsHolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="30dp"
 
             app:cardCornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -80,14 +80,14 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="25dp"
-                                android:src="@drawable/wind_speed_icon" />
+                                android:src="@drawable/temperature_icon" />
                         </androidx.cardview.widget.CardView>
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_wind" />
+                            android:text="@string/tv_temp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -95,8 +95,8 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{weatherModel.visibility}"
-                            tools:text="SE, 5.3 m/s" />
+                            android:text="@{weatherModel.temp}"
+                            tools:text="25" />
 
                     </LinearLayout>
 
@@ -209,8 +209,8 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{weatherModel.feels_like}"
-                            tools:text="SE, 5.3 m/s" />
+                            android:text="@{weatherModel.cloud}"
+                            tools:text="30" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -254,7 +254,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{weatherModel.visibility}"
+                            android:text="@{weatherModel.wind}"
                             tools:text="SE, 5.3 m/s" />
 
                     </LinearLayout>
@@ -277,14 +277,14 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="25dp"
-                                android:src="@drawable/pressure_gauge" />
+                                android:src="@drawable/visible" />
                         </androidx.cardview.widget.CardView>
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_pressure" />
+                            android:text="@string/tv_visible" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -292,9 +292,9 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{weatherModel.pressure}"
+                            android:text="@{weatherModel.visibility}"
 
-                            tools:text="SE, 5.3 m/s" />
+                            tools:text="25" />
 
                     </LinearLayout>
 
@@ -315,14 +315,14 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="25dp"
-                                android:src="@drawable/humidity" />
+                                android:src="@drawable/feel_like" />
                         </androidx.cardview.widget.CardView>
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_humidity" />
+                            android:text="@string/tv_feel_like" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -330,9 +330,9 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{weatherModel.humidity}"
+                            android:text="@{weatherModel.feels_like}"
 
-                            tools:text="SE, 5.3 m/s" />
+                            tools:text="25" />
 
                     </LinearLayout>
 
@@ -353,14 +353,14 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="25dp"
-                                android:src="@drawable/clouds" />
+                                android:src="@drawable/wind_power" />
                         </androidx.cardview.widget.CardView>
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_cloud" />
+                            android:text="@string/tv_wind_gust" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -368,8 +368,8 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{weatherModel.feels_like}"
-                            tools:text="SE, 5.3 m/s" />
+                            android:text="@{weatherModel.windGust}"
+                            tools:text="258" />
 
                     </LinearLayout>
                 </LinearLayout>
