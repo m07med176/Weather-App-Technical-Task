@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="androidx.databinding.ViewDataBinding.IncludedLayouts" />
+
+        <variable
+            name="weatherModel"
+            type="com.alamiya.weatherapptask.domain.models.WeatherContentModel" />
 
         <variable
             name="viewModel"
@@ -12,104 +19,117 @@
         <variable
             name="mAdapter"
             type="com.alamiya.databindingview.presentation.weatherDetails.WeatherAdapter" />
+
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/weather_details_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.alamiya.databindingview.presentation.weatherDetails.WeatherDetailsFragment">
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_holder"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/region_name"
-            app:endIconMode="clear_text"
-            app:hintEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_text_view"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_holder"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:completionThreshold="1"
-                android:maxLines="1"
-                android:padding="10dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="10dp"
+                android:hint="@string/region_name"
+                app:endIconMode="clear_text"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:completionThreshold="1"
+                    android:maxLines="1"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_holder">
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/state_first_open"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="false"
-                app:lottie_rawRes="@raw/landing_page" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/state_empty_data_holder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="false"
-                app:lottie_rawRes="@raw/state_nothing_data" />
 
             <LinearLayout
-                android:id="@+id/state_loading_holder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_holder">
 
-                <include layout="@layout/shimmer_details_daily" />
-
-            </LinearLayout>
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/state_error_holder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/state_error" />
-
-            <LinearLayout
-                android:id="@+id/rv_favorite"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/state_first_open"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:adapter="@{mAdapter}"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/landing_page" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/state_empty_data_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/state_nothing_data" />
+
+                <LinearLayout
+                    android:id="@+id/state_loading_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_daily" />
+                    android:visibility="gone">
+
+                    <include layout="@layout/shimmer_details_daily" />
+
+                </LinearLayout>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/state_error_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/state_error" />
+
+                <LinearLayout
+                    android:id="@+id/rv_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adapter="@{mAdapter}"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_daily" />
+
+                </LinearLayout>
 
             </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/included_layout"
+            layout="@layout/day_deatils_buttom_sheet"
+            bind:weatherModel="@{weatherModel}" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
