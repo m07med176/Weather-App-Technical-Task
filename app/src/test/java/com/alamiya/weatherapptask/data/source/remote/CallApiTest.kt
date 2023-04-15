@@ -31,7 +31,7 @@ class CallApiTest{
 
     @Before
     fun initRetrofit() {
-        retrofitInstance = RetrofitInstance(ApplicationProvider.getApplicationContext())
+        retrofitInstance = RetrofitInstance()
         api = retrofitInstance.api
     }
 

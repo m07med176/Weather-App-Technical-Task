@@ -1,20 +1,16 @@
 package com.alamiya.weatherapptask.data.source.remote.retrofit
 
-import android.content.Context
 import com.alamiya.weatherapptask.Constants
-import com.alamiya.weatherapptask.data.source.remote.hasNetwork
-import okhttp3.Cache
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInstance(private val context: Context) {
+class RetrofitInstance {
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .client(cashAndLoggerManager(context))
+            .client(cashAndLoggerManager())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -24,28 +20,12 @@ class RetrofitInstance(private val context: Context) {
     }
 
 
-    private fun cashAndLoggerManager(context: Context): OkHttpClient {
+    private fun cashAndLoggerManager(): OkHttpClient {
         // Logging Retrofit
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        // cash size
-        val cacheSize = java.lang.Long.valueOf((20 * 1024 * 1024).toLong())
-        val myCache = Cache(context.cacheDir, cacheSize)
         return OkHttpClient.Builder()
-            .cache(myCache)
-            .addInterceptor(Interceptor { chain: Interceptor.Chain ->
-                var request = chain.request()
-                request = if (context.hasNetwork()) request.newBuilder()
-                    .header("Cache-Control", "public, max-age=" + Constants.MAX_AGE)
-                    .build() else request.newBuilder()
-                    .header(
-                        "Cache-Control",
-                        "public, only-if-cached, max-stale=" + Constants.MAX_STALE
-                    )
-                    .build()
-                chain.proceed(request)
-            })
             .addInterceptor(interceptor)
             .build()
     }

@@ -41,7 +41,7 @@ class RepositoryImpl(
                 val localDataSource = LocalDataSource(room.cashDao())
 
                 // Remote Dependencies
-                val api = RetrofitInstance(app).api
+                val api = RetrofitInstance().api
                 val remoteDataSource = RemoteDataSource(api)
 
                 RepositoryImpl(localDataSource,remoteDataSource,app)
