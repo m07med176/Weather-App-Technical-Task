@@ -11,6 +11,12 @@ Snow, Extreme etc.).
 app should display cached data and show some warning to indicate it is not accurate data, if no data
 cached he should see UI represent this error and option to retry.
 
+
+<hr>
+
+
+<a href="#"><img alt="Get it on Google Play" src="https://github.com/m07med176/Weather-App-Technical-Task/blob/master/screenshots/record.gif" width=50% align="center"/></a>
+
 <hr>
 
 <h2>Applied Skills :</h2>
